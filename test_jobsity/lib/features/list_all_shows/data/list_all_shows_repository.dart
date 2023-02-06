@@ -11,6 +11,9 @@ abstract class ListAllShowsRepository {
   Future<Either<Failure, List<Show>>> getAllShows({
     required int? page,
   });
+  Future<Either<Failure, List<Show>>> searchShow({
+    required String query,
+  });
 }
 
 class ListAllShowsRepositoryImpl implements ListAllShowsRepository {
@@ -37,7 +40,23 @@ class ListAllShowsRepositoryImpl implements ListAllShowsRepository {
       return Left(
         ServerFailure(),
       );
-    } catch (e) {
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Show>>> searchShow({
+    required String query,
+  }) async {
+    try {
+      final response = await datasource.searchShow(
+        query: query,
+      );
+      return Right(response);
+    } on ServerException catch (e) {
+      return Left(
+        ServerFailure(errorMessage: e.message),
+      );
+    } on DioError catch (_) {
       return Left(
         ServerFailure(),
       );

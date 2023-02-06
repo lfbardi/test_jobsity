@@ -7,6 +7,9 @@ abstract class ListAllShowsDatasource {
   Future<List<Show>> getAllShows({
     required int page,
   });
+  Future<List<Show>> searchShow({
+    required String query,
+  });
 }
 
 class ListAllShowsDatasourceImpl implements ListAllShowsDatasource {
@@ -29,5 +32,20 @@ class ListAllShowsDatasourceImpl implements ListAllShowsDatasource {
     }
 
     return (response.data as List).map((show) => Show.fromMap(show)).toList();
+  }
+
+  @override
+  Future<List<Show>> searchShow({required String query}) async {
+    try {
+      final response = await dio.get(
+        '/search/shows?q=$query',
+      );
+
+      return (response.data as List)
+          .map((show) => Show.fromSearchMap(show))
+          .toList();
+    } catch (e) {
+      throw ServerException(message: 'Error searching show');
+    }
   }
 }
