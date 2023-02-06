@@ -24,6 +24,13 @@ class HomePage extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CachedNetworkImage(
+              placeholder: (context, string) {
+                return const SizedBox(
+                  height: 36,
+                  width: 36,
+                  child: CircularProgressIndicator(),
+                );
+              },
               imageUrl: 'https://static.tvmaze.com/images/tvm-header-logo.png',
               height: 36,
             )
