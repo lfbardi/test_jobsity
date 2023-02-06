@@ -21,7 +21,9 @@ class _ListAllShowsPageState extends ConsumerState<ListAllShowsPage> {
   void initState() {
     super.initState();
 
-    ref.read(listAllShowsStoreProvider.notifier).getAllShows();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      ref.read(listAllShowsStoreProvider.notifier).getAllShows();
+    });
   }
 
   @override
@@ -29,47 +31,80 @@ class _ListAllShowsPageState extends ConsumerState<ListAllShowsPage> {
     final state = ref.watch(listAllShowsStoreProvider);
     final store = ref.read(listAllShowsStoreProvider.notifier);
 
-    if (state is LoadingListAllShowsState) {
-      return const Center(
-        child: CircularProgressIndicator(),
-      );
-    } else if (state is SuccessListAllShowsState) {
-      return Column(
+    return Padding(
+      padding: const EdgeInsets.only(left: 20, right: 20),
+      child: Column(
         children: [
           const SizedBox(
             height: 20,
           ),
-          Text(
-            'All Shows',
-            style: title.copyWith(fontSize: 24, fontWeight: FontWeight.bold),
+          Row(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'All Shows',
+                  style:
+                      title.copyWith(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+              ),
+              const SizedBox(
+                width: 12,
+              ),
+              Expanded(
+                child: Material(
+                  elevation: 4,
+                  color: descriptionColor.withOpacity(0.1),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 12),
+                    child: Expanded(
+                      child: TextField(
+                        onChanged: (value) {
+                          if (value.length >= 3) {
+                            store.searchShow(query: value);
+                          } else if (value.isEmpty) {
+                            store.clearSearchedShows();
+                            store.getAllShows();
+                          }
+                        },
+                        cursorColor: primaryColor,
+                        keyboardType: TextInputType.text,
+                        style: title.copyWith(fontSize: 12),
+                        decoration: InputDecoration(
+                          hintText: 'Search shows',
+                          isDense: true,
+                          contentPadding: const EdgeInsets.fromLTRB(
+                            10,
+                            10,
+                            10,
+                            0,
+                          ),
+                          suffixIcon: const Icon(
+                            Icons.search,
+                            color: descriptionColor,
+                          ),
+                          hintStyle: title.copyWith(fontSize: 12),
+                          fillColor: Colors.transparent,
+                          filled: true,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30),
+                            borderSide: BorderSide.none,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
           const SizedBox(
             height: 20,
           ),
-          Expanded(
-            child: LazyLoadScrollView(
-              onEndOfPage: () => store.getNextPage(),
-              scrollOffset: 100,
-              child: GridView.builder(
-                padding: const EdgeInsets.all(20),
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 200,
-                  childAspectRatio: 2 / 3,
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: 20,
-                ),
-                itemCount: state.shows.length,
-                itemBuilder: (context, index) {
-                  final show = state.shows[index];
-                  return ShowCard(
-                    image: show.image,
-                    name: show.name,
-                    rating: show.rating,
-                  );
-                },
-              ),
-            ),
-          ),
+          _buildBody(state, store),
           if (store.endOfListAchieved)
             Padding(
               padding: const EdgeInsets.only(top: 20),
@@ -82,6 +117,41 @@ class _ListAllShowsPageState extends ConsumerState<ListAllShowsPage> {
               ),
             ),
         ],
+      ),
+    );
+  }
+
+  _buildBody(ListAllShowsState state, ListAllShowsStore store) {
+    if (state is LoadingListAllShowsState) {
+      return const Expanded(
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    } else if (state is SuccessListAllShowsState) {
+      return Expanded(
+        child: LazyLoadScrollView(
+          onEndOfPage: state.isSearch ? () {} : () => store.getNextPage(),
+          scrollOffset: 100,
+          child: GridView.builder(
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 200,
+              childAspectRatio: 2 / 3,
+              crossAxisSpacing: 20,
+              mainAxisSpacing: 20,
+            ),
+            itemCount: state.shows.length,
+            itemBuilder: (context, index) {
+              final show = state.shows[index];
+              return ShowCard(
+                id: show.id,
+                image: show.image ?? 'https://via.placeholder.com/140x190',
+                name: show.name ?? 'No name',
+                rating: show.rating ?? 0,
+              );
+            },
+          ),
+        ),
       );
     } else if (state is ErrorListAllShowsState) {
       return Center(
@@ -109,7 +179,6 @@ class _ListAllShowsPageState extends ConsumerState<ListAllShowsPage> {
         ),
       );
     }
-
     return const SizedBox.shrink();
   }
 }

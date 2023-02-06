@@ -8,8 +8,10 @@ class LoadingListAllShowsState extends ListAllShowsState {}
 
 class SuccessListAllShowsState extends ListAllShowsState {
   final List<Show> shows;
+  bool isSearch;
   SuccessListAllShowsState({
     required this.shows,
+    this.isSearch = false,
   });
 }
 

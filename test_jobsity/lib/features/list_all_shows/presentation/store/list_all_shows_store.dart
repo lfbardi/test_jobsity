@@ -36,6 +36,7 @@ class ListAllShowsStore extends StateNotifier<ListAllShowsState> {
   int currentPage = 0;
   bool endOfListAchieved = false;
   List<Show> shows = [];
+  List<Show> searchedShows = [];
 
   getAllShows({int? page}) async {
     final getAllShowsEither = await listAllShowsRepository.getAllShows(
@@ -55,6 +56,29 @@ class ListAllShowsStore extends StateNotifier<ListAllShowsState> {
       (shows) {
         this.shows.addAll(shows);
         state = SuccessListAllShowsState(shows: this.shows);
+      },
+    );
+  }
+
+  clearSearchedShows() {
+    shows.clear();
+  }
+
+  searchShow({required String query}) async {
+    state = LoadingListAllShowsState();
+
+    final getAllShowsEither = await listAllShowsRepository.searchShow(
+      query: query,
+    );
+
+    getAllShowsEither.fold(
+      (failure) {
+        state = ErrorListAllShowsState(errorMessage: failure.errorMessage);
+      },
+      (shows) {
+        this.shows.clear();
+        this.shows.addAll(shows);
+        state = SuccessListAllShowsState(shows: this.shows, isSearch: true);
       },
     );
   }
