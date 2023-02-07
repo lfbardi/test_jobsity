@@ -1,16 +1,40 @@
-# test_jobsity
+# Flutter Jobsity Test
 
-A new Flutter project.
+An App builded with TV Maze API
 
-## Getting Started
+# To Run the App
+## Clone the repository, run flutter pub get, and run on a device of your preference.
 
-This project is a starting point for a Flutter application.
+# Tested debugging on
 
-A few resources to get you started if this is your first Flutter project:
+## - Nexus 5 API 32 (ARM64 Emulator)
+## - Iphone 14 Pro Max IOS 16.2 (Emulator)
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+# Dependecies used
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+  ## dio: ^4.0.6 - For Http Client
+  ## dartz: ^0.10.1 - For Either result
+  ## flutter_riverpod: ^2.1.3 - For state management and dependency injection
+  ## google_nav_bar: ^5.0.6 - For Simple Custom Bottom Nav Bar
+  ## google_fonts: ^4.0.3 - For Fonts Source
+  ## cached_network_image: ^3.2.3 - For Caching Images
+  ## lazy_load_scrollview: ^1.3.0 - For Paging the Lists
+  ## hive: ^2.2.1 - For local storage
+  ## hive_flutter: ^1.1.0 - For local storage
+
+# Architecture
+
+## I based on the Clean Architecture from Uncle Bob, but since its a small app, I did cutoff some layers like UseCase and Domain layers, to develop with speed but still have the layers uncoupled and clean.
+# Features
+
+## - List All Shows
+## - Search for a show by name
+## - See Show Details
+## - See Show Seasons
+## - See Episodes separated by Season
+## - Favorite a Show
+## - Unfavorite a Show
+## - List of Favorite Shows with Sorting to A to Z and Z to A
+
+# Screenshots
+
