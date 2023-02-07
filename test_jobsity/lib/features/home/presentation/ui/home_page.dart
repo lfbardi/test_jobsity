@@ -46,11 +46,17 @@ class HomePage extends ConsumerWidget {
       backgroundColor: backgroundColor,
       body: IndexedStack(
         index: state,
-        children: const [
+        children: [
           ListAllShowsPage(),
           FavoritesShowsPage(),
           Center(
-            child: Text('Profile'),
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Text(
+                'Sorry, didn\'t manage time to do this page :(',
+                style: title.copyWith(fontSize: 20),
+              ),
+            ),
           ),
         ],
       ),
@@ -93,7 +99,7 @@ class HomePage extends ConsumerWidget {
                 ),
                 GButton(
                   icon: Icons.person,
-                  text: 'Profile',
+                  text: 'Persons',
                   textStyle: tabText,
                 ),
               ],
