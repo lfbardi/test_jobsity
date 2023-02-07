@@ -11,4 +11,9 @@ class Schedule {
         time: json["time"] ?? 'Unavailable',
         days: List<String>.from(json["days"].map((x) => x) ?? ['Uniavailable']),
       );
+
+  Map<String, dynamic> toMap() => {
+        "time": time,
+        "days": List<dynamic>.from(days!.map((x) => x)),
+      };
 }

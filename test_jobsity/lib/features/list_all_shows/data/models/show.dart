@@ -31,6 +31,18 @@ class Show {
     );
   }
 
+  factory Show.fromHiveMap(Map<String, dynamic> map) {
+    return Show(
+      id: map['id'] ?? 0,
+      name: map['name'] ?? '',
+      genres: List<String>.from(map['genres'] ?? []),
+      rating: map['rating'] ?? 0,
+      image: map['image'] ?? '',
+      summary: map['summary'] ?? '',
+      schedule: Schedule.fromMap(map['schedule'] ?? {}),
+    );
+  }
+
   factory Show.fromSearchMap(Map<String, dynamic> map) {
     return Show(
       id: map['show']['id'] ?? 0,
@@ -41,5 +53,17 @@ class Show {
       summary: map['show']['summary'] ?? '',
       schedule: Schedule.fromMap(map['show']['schedule'] ?? {}),
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'genres': genres,
+      'rating': rating,
+      'image': image,
+      'summary': summary,
+      'schedule': schedule?.toMap(),
+    };
   }
 }
