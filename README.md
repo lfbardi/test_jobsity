@@ -13,15 +13,15 @@
 
 # Dependecies used
 
- dio: ^4.0.6 - For Http Client
- dartz: ^0.10.1 - For Either result
- flutter_riverpod: ^2.1.3 - For state management and dependency injection
- google_nav_bar: ^5.0.6 - For Simple Custom Bottom Nav Bar
- google_fonts: ^4.0.3 - For Fonts Source
- cached_network_image: ^3.2.3 - For Caching Images
- lazy_load_scrollview: ^1.3.0 - For Paging the Lists
- hive: ^2.2.1 - For local storage
- hive_flutter: ^1.1.0 - For local storage
+ dio: ^4.0.6 - For Http Client  
+ dartz: ^0.10.1 - For Either result  
+ flutter_riverpod: ^2.1.3 - For state management and dependency injection  
+ google_nav_bar: ^5.0.6 - For Simple Custom Bottom Nav Bar  
+ google_fonts: ^4.0.3 - For Fonts Source  
+ cached_network_image: ^3.2.3 - For Caching Images  
+ lazy_load_scrollview: ^1.3.0 - For Paging the Lists  
+ hive: ^2.2.1 - For local storage  
+ hive_flutter: ^1.1.0 - For local storage  
 
 # Architecture
 
