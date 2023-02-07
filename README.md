@@ -40,6 +40,7 @@
 # Screenshots
 
 ## Homepage
+
 <img width="435" alt="Captura de Tela 2023-02-07 às 6 08 12 PM" src="https://user-images.githubusercontent.com/53882248/217365887-005d886d-2564-49cd-af10-521865ef27e4.png">
 
 ## Searching
@@ -50,7 +51,11 @@
 
 <img width="438" alt="Captura de Tela 2023-02-07 às 6 09 53 PM" src="https://user-images.githubusercontent.com/53882248/217366174-ac9af012-06ee-42cb-b312-8296ba63c5d1.png">
 
-# List of Favorites
+## Seasons and Episodes
+
+<img width="432" alt="Captura de Tela 2023-02-07 às 6 12 00 PM" src="https://user-images.githubusercontent.com/53882248/217366557-d6bffcea-4346-490a-ac8c-514bce59ed61.png">
+
+## List of Favorites
 
 <img width="434" alt="Captura de Tela 2023-02-07 às 6 10 30 PM" src="https://user-images.githubusercontent.com/53882248/217366291-49cdc124-ba85-4d35-b697-66cc7f3112e1.png">
 
