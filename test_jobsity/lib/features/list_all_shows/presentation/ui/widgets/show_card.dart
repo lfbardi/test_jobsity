@@ -1,36 +1,39 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:test_jobsity/core/design_system/colors.dart';
 
 import '../../../../../core/design_system/text_styles.dart';
 import '../../../../show_details/presentation/ui/show_details_page.dart';
+import '../../../data/models/show.dart';
 
-class ShowCard extends StatelessWidget {
+class ShowCard extends ConsumerStatefulWidget {
   const ShowCard({
     super.key,
-    required this.id,
-    required this.image,
-    required this.name,
-    required this.rating,
+    required this.show,
   });
 
-  final int id;
-  final String image;
-  final String name;
-  final num rating;
+  final Show show;
 
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _ShowCardState();
+}
+
+class _ShowCardState extends ConsumerState<ShowCard> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.push(
+      onTap: () async {
+        final resetHomeAndFavorites = await Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => ShowDetailsPage(
-              showId: id,
+              showId: widget.show.id,
             ),
           ),
         );
+
+        resetHomeAndFavorites();
       },
       borderRadius: BorderRadius.circular(8),
       child: Container(
@@ -64,7 +67,8 @@ class ShowCard extends StatelessWidget {
                         );
                       },
                       fit: BoxFit.cover,
-                      imageUrl: image,
+                      imageUrl: widget.show.image ??
+                          'https://via.placeholder.com/140x190',
                     ),
                   ),
                 ),
@@ -81,15 +85,18 @@ class ShowCard extends StatelessWidget {
                       ),
                     ),
                     child: Center(
-                      child: Text(rating.toString(), style: showRating),
+                      child: Text(
+                        (widget.show.rating ?? 0).toString(),
+                        style: showRating,
+                      ),
                     ),
                   ),
-                )
+                ),
               ],
             ),
             const SizedBox(height: 4),
             Text(
-              name,
+              widget.show.name ?? 'No Name',
               overflow: TextOverflow.ellipsis,
               style: title.copyWith(
                 fontSize: 12,
