@@ -13,3 +13,11 @@ class ServerFailure extends Failure {
     this.errorMessage = 'An error happened. Please try again.',
   }) : super(errorMessage: errorMessage);
 }
+
+class LocalHiveFailure extends Failure {
+  final String errorMessage;
+
+  LocalHiveFailure({
+    this.errorMessage = 'An error happened. Please try again.',
+  }) : super(errorMessage: errorMessage);
+}
