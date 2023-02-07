@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:test_jobsity/core/design_system/colors.dart';
+import 'package:test_jobsity/features/favorites_shows/presentation/store/favorites_show_store.dart';
 
 import '../../../../core/design_system/text_styles.dart';
+import '../../../favorites_shows/presentation/ui/favorites_shows_page.dart';
+import '../../../list_all_shows/presentation/store/list_all_shows_store.dart';
 import '../../../list_all_shows/presentation/ui/list_all_shows_page.dart';
 import '../store/home_store.dart';
 
@@ -14,7 +17,10 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(homeStoreProvider);
-    final store = ref.read(homeStoreProvider.notifier);
+    final homeStore = ref.read(homeStoreProvider.notifier);
+
+    final listAllStore = ref.read(listAllShowsStoreProvider.notifier);
+    final favoritesStore = ref.read(favoritesShowsStoreProvider.notifier);
 
     return Scaffold(
       appBar: AppBar(
@@ -42,9 +48,7 @@ class HomePage extends ConsumerWidget {
         index: state,
         children: const [
           ListAllShowsPage(),
-          Center(
-            child: Text('Favorites'),
-          ),
+          FavoritesShowsPage(),
           Center(
             child: Text('Profile'),
           ),
@@ -75,11 +79,17 @@ class HomePage extends ConsumerWidget {
                   icon: Icons.home,
                   text: 'Home',
                   textStyle: tabText,
+                  onPressed: () {
+                    listAllStore.getAllShows();
+                  },
                 ),
                 GButton(
                   icon: Icons.favorite,
                   text: 'Favorites',
                   textStyle: tabText,
+                  onPressed: () {
+                    favoritesStore.getMyFavoritesShows();
+                  },
                 ),
                 GButton(
                   icon: Icons.person,
@@ -89,7 +99,7 @@ class HomePage extends ConsumerWidget {
               ],
               selectedIndex: 0,
               onTabChange: (index) {
-                store.setPageIndex(page: index);
+                homeStore.setPageIndex(page: index);
               },
             ),
           ),
