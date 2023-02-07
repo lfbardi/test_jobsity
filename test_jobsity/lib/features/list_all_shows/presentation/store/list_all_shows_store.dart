@@ -39,6 +39,8 @@ class ListAllShowsStore extends StateNotifier<ListAllShowsState> {
   List<Show> searchedShows = [];
 
   getAllShows({int? page}) async {
+    state = LoadingListAllShowsState();
+
     final getAllShowsEither = await listAllShowsRepository.getAllShows(
       page: page,
     );
@@ -83,8 +85,27 @@ class ListAllShowsStore extends StateNotifier<ListAllShowsState> {
     );
   }
 
-  getNextPage() {
+  getNextPage() async {
     currentPage++;
-    getAllShows(page: currentPage);
+
+    final getAllShowsEither = await listAllShowsRepository.getAllShows(
+      page: currentPage,
+    );
+
+    getAllShowsEither.fold(
+      (failure) {
+        if (failure.errorMessage == 'End of List') {
+          endOfListAchieved = true;
+          state = SuccessListAllShowsState(shows: shows);
+          return;
+        }
+
+        state = ErrorListAllShowsState(errorMessage: failure.errorMessage);
+      },
+      (shows) {
+        this.shows.addAll(shows);
+        state = SuccessListAllShowsState(shows: this.shows);
+      },
+    );
   }
 }

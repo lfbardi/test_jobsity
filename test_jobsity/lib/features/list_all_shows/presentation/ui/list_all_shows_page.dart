@@ -131,7 +131,8 @@ class _ListAllShowsPageState extends ConsumerState<ListAllShowsPage> {
     } else if (state is SuccessListAllShowsState) {
       return Expanded(
         child: LazyLoadScrollView(
-          onEndOfPage: state.isSearch ? () {} : () => store.getNextPage(),
+          onEndOfPage:
+              state.isSearch ? () {} : () async => await store.getNextPage(),
           scrollOffset: 100,
           child: GridView.builder(
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -144,10 +145,7 @@ class _ListAllShowsPageState extends ConsumerState<ListAllShowsPage> {
             itemBuilder: (context, index) {
               final show = state.shows[index];
               return ShowCard(
-                id: show.id,
-                image: show.image ?? 'https://via.placeholder.com/140x190',
-                name: show.name ?? 'No name',
-                rating: show.rating ?? 0,
+                show: show,
               );
             },
           ),
