@@ -37,12 +37,45 @@ class _FavoritesShowsPageState extends ConsumerState<FavoritesShowsPage> {
           const SizedBox(
             height: 20,
           ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'My Favorites',
-              style: title.copyWith(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
+          Row(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'My Favorites',
+                  style:
+                      title.copyWith(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+              ),
+              const Spacer(),
+              IconButton(
+                onPressed: () {
+                  if (state is SuccessFavoritesShowsState) {
+                    setState(() {
+                      store.sortByAToZ(state.shows);
+                    });
+                  }
+                },
+                icon: const Icon(
+                  Icons.sort_by_alpha,
+                  color: primaryColor,
+                ),
+              ),
+              const Spacer(),
+              IconButton(
+                onPressed: () {
+                  if (state is SuccessFavoritesShowsState) {
+                    setState(() {
+                      store.sortByZToA(state.shows);
+                    });
+                  }
+                },
+                icon: const Icon(
+                  Icons.sort_by_alpha,
+                  color: primaryColor,
+                ),
+              ),
+            ],
           ),
           const SizedBox(
             height: 20,

@@ -44,7 +44,7 @@ class FavoritesShowsStore extends StateNotifier<FavoritesShowsState> {
           state = EmptyFavoritesShowsState();
         } else {
           myFavoriteShows = favoriteShows;
-          state = SuccessFavoritesShowsState(shows: favoriteShows);
+          sortByAToZ(favoriteShows);
         }
       },
     );
@@ -90,5 +90,17 @@ class FavoritesShowsStore extends StateNotifier<FavoritesShowsState> {
   bool verifyItsFavorite(int id) {
     final isFavorite = myFavoriteShows.any((element) => element.id == id);
     return isFavorite;
+  }
+
+  sortByAToZ(List<Show> shows) {
+    final sortedShows = [...shows];
+    sortedShows.sort((a, b) => a.name!.compareTo(b.name!));
+    state = SuccessFavoritesShowsState(shows: sortedShows);
+  }
+
+  sortByZToA(List<Show> shows) {
+    final sortedShows = [...shows];
+    sortedShows.sort((a, b) => -a.name!.compareTo(b.name!));
+    state = SuccessFavoritesShowsState(shows: sortedShows);
   }
 }
