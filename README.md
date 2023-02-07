@@ -8,8 +8,8 @@
 
 # Tested debugging on
 
- [x] - Nexus 5 API 32 (ARM64 Emulator)
- [x] - Iphone 14 Pro Max IOS 16.2 (Emulator)
+- [x] Nexus 5 API 32 (ARM64 Emulator)
+- [x] Iphone 14 Pro Max IOS 16.2 (Emulator)
 
 # Dependecies used
 
